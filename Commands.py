@@ -5,19 +5,27 @@ from discord.ext import commands
 from datetime import datetime
 
 client = discord.Client()
+self.bot = bot
 
 #on_ready event
 
 @client.event
 async def on_ready():
-    print('Im in "Agent {}"'.format(client.user.name))
-    client.loop.create_task(status_task())
+    print(f'Logged in as {self.bot.user} ({self.bot.user.id})')
+    
+@client.event
+async def on_resumed(self):
+    print(f'{self.bot.user} has reconnected')
+    
+@client.event
+async def on_command_error(self, cty, error):
+    await ctx.send(error)
 
 #status-task
 
 async def status_task():
     while True:
-        await client.change_presence(activity=discord.Game('Aboniert HandOfBlood '))
+        await client.change_presence(activity=discord.Game('Aboniert HandOfBlood'))
 
 
 
@@ -33,9 +41,6 @@ async def on_message(message):
         embedVar.set_author(name=message.author.display_name, icon_url=message.author.avatar_url)
         embedVar.set_thumbnail(url="https://cdn.discordapp.com/attachments/877878077747785739/893546038982483968/Discordload.gif")
         await message.channel.send(embed=embedVar)
-
-
-
 
 
 
